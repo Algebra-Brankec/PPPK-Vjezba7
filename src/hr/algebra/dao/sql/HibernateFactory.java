@@ -16,7 +16,6 @@ public class HibernateFactory {
 
     public static final String SELECT_PEOPLE = "Person.findAll";
     private static final String PERSISTENCE_UNIT = "PersonManagerPU";
-    //private static final String PERSISTENCE_UNIT = "MovieManagerPU";
 
     private static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 
