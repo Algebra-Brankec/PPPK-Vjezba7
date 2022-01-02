@@ -70,9 +70,9 @@ public class PeopleController implements Initializable {
     @FXML
     private TableColumn<PersonViewModel, Integer> tcAge;
     @FXML
-    private TextField tfFirstName, tfLastName, tfAge, tfEmail;
+    private TextField tfFirstName, tfLastName;
     @FXML
-    private Label lbFirstNameError, lbLastNameError, lbAgeError, lbEmailError, lbIconError;
+    private Label lbFirstNameError, lbLastNameError, lbIconError;
 
     /**
      * Initializes the controller class.
@@ -82,16 +82,13 @@ public class PeopleController implements Initializable {
         initValidation();
         initPeople();
         initTable();
-        addIntegerMask(tfAge);
         setupListeners();
     }
 
     private void initValidation() {
         validationMap = Stream.of(
                 new AbstractMap.SimpleImmutableEntry<>(tfFirstName, lbFirstNameError),
-                new AbstractMap.SimpleImmutableEntry<>(tfLastName, lbLastNameError),
-                new AbstractMap.SimpleImmutableEntry<>(tfAge, lbAgeError),
-                new AbstractMap.SimpleImmutableEntry<>(tfEmail, lbEmailError))
+                new AbstractMap.SimpleImmutableEntry<>(tfLastName, lbLastNameError))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
@@ -175,8 +172,6 @@ public class PeopleController implements Initializable {
         selectedPersonViewModel = viewModel != null ? viewModel : new PersonViewModel(null);
         tfFirstName.setText(selectedPersonViewModel.getFirstNameProperty().get());
         tfLastName.setText(selectedPersonViewModel.getLastNameProperty().get());
-        tfAge.setText(String.valueOf(selectedPersonViewModel.getAgeProperty().get()));
-        tfEmail.setText(selectedPersonViewModel.getEmailProperty().get());
         ivPerson.setImage(selectedPersonViewModel.getPictureProperty().get() != null ? new Image(new ByteArrayInputStream(selectedPersonViewModel.getPictureProperty().get())) : new Image(new File("src/assets/no_image.png").toURI().toString()));
     }
 
@@ -187,7 +182,7 @@ public class PeopleController implements Initializable {
 
     @FXML
     private void uploadImage(ActionEvent event) {
-        File file = FileUtils.uploadFileDialog(tfAge.getScene().getWindow(), "jpg", "jpeg", "png");
+        File file = FileUtils.uploadFileDialog(tfLastName.getScene().getWindow(), "jpg", "jpeg", "png");
         if (file != null) {
             Image image = new Image(file.toURI().toString());
             try {
@@ -205,8 +200,6 @@ public class PeopleController implements Initializable {
         if (formValid()) {
             selectedPersonViewModel.getPerson().setFirstName(tfFirstName.getText().trim());
             selectedPersonViewModel.getPerson().setLastName(tfLastName.getText().trim());
-            selectedPersonViewModel.getPerson().setAge(Integer.valueOf(tfAge.getText().trim()));
-            selectedPersonViewModel.getPerson().setEmail(tfEmail.getText().trim());
             if (selectedPersonViewModel.getPerson().getIDPerson() == 0) {
                 people.add(selectedPersonViewModel);
             } else {

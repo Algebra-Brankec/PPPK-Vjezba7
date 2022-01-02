@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.algebra.controller.PeopleController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.algebra.controller.PeopleController">
     <children>
         <TabPane fx:id="tpContent" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -44,7 +44,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="337.0" prefWidth="589.0">
                             <children>
-                                <ImageView fx:id="ivPerson" fitHeight="188.0" fitWidth="162.0" layoutX="396.0" layoutY="45.0" >
+                                <ImageView fx:id="ivPerson" fitHeight="188.0" fitWidth="162.0" layoutX="396.0" layoutY="45.0">
                            <image>
                               <Image url="@../../../assets/no_image.png" />
                            </image></ImageView>
@@ -57,8 +57,6 @@
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="First name:">
@@ -72,23 +70,9 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
                               </Label>
-                              <Label text="Age:" GridPane.rowIndex="2">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </Label>
-                              <Label text="Email:" GridPane.rowIndex="3">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </Label>
                               <TextField fx:id="tfLastName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="tfAge" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="63.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="tfEmail" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label fx:id="lbFirstNameError" text="X" textFill="RED" visible="false" GridPane.columnIndex="2" />
-                              <Label fx:id="lbAgeError" text="X" textFill="RED" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <Label fx:id="lbLastNameError" text="X" textFill="RED" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label fx:id="lbEmailError" text="X" textFill="RED" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                         <Button layoutX="497.0" layoutY="257.0" mnemonicParsing="false" onAction="#commit" style="-fx-background-color: blue;" text="Commit" textFill="WHITE" />
