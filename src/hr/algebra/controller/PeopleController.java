@@ -104,8 +104,6 @@ public class PeopleController implements Initializable {
     private void initTable() {
         tcFirstName.setCellValueFactory(person -> person.getValue().getFirstNameProperty());
         tcLastName.setCellValueFactory(person -> person.getValue().getLastNameProperty());
-        tcAge.setCellValueFactory(person -> person.getValue().getAgeProperty().asObject());
-        tcEmail.setCellValueFactory(person -> person.getValue().getEmailProperty());
         tvPeople.setItems(people);
     }
 
