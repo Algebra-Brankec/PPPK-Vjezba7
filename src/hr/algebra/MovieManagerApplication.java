@@ -17,15 +17,15 @@ import javafx.stage.Stage;
  *
  * @author daniel.bele
  */
-public class PersonManagerApplication extends Application {
+public class MovieManagerApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("view/People.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/Movie.fxml"));
 
         Scene scene = new Scene(root, 600, 400);
 
-        primaryStage.setTitle("Person Manager");
+        primaryStage.setTitle("Movie Manager");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -6,27 +6,27 @@
 package hr.algebra.dao.sql;
 
 import hr.algebra.dao.Repository;
-import hr.algebra.model.Person;
+import hr.algebra.model.Movie;
 import java.util.List;
 import javax.persistence.EntityManager;
 
 public class HibernateRepository implements Repository {
 
     @Override
-    public int addPerson(Person data) throws Exception {
+    public int addMovie(Movie data) throws Exception {
         try (EntityManagerWrapper entityManager = HibernateFactory.getEntityManager()) {
             EntityManager em = entityManager.get();
             em.getTransaction().begin();
-            // in order to use in in transaction scope, we must create new Person that with data details
-            Person person = new Person(data);
+            // in order to use in in transaction scope, we must create new Movie that with data details
+            Movie person = new Movie(data);
             em.persist(person);
             em.getTransaction().commit();
-            return person.getIDPerson();
+            return person.getIDMovie();
         }
     }
 
     @Override
-    public void deletePerson(Person person) throws Exception {
+    public void deleteMovie(Movie person) throws Exception {
         try (EntityManagerWrapper entityManager = HibernateFactory.getEntityManager()) {
             EntityManager em = entityManager.get();
             em.getTransaction().begin();
@@ -37,27 +37,27 @@ public class HibernateRepository implements Repository {
     }
 
     @Override
-    public List<Person> getPeople() throws Exception {
+    public List<Movie> getMovie() throws Exception {
         try (EntityManagerWrapper entityManager = HibernateFactory.getEntityManager()) {
-            return entityManager.get().createNamedQuery(HibernateFactory.SELECT_PEOPLE).getResultList();
+            return entityManager.get().createNamedQuery(HibernateFactory.SELECT_MOVIE).getResultList();
         }
     }
 
     @Override
-    public Person getPerson(int idPerson) throws Exception {
+    public Movie getMovie(int idMovie) throws Exception {
         try (EntityManagerWrapper entityManager = HibernateFactory.getEntityManager()) {
             EntityManager em = entityManager.get();
-            return em.find(Person.class, idPerson);
+            return em.find(Movie.class, idMovie);
         }
     }
 
     @Override
-    public void updatePerson(Person person) throws Exception {
+    public void updateMovie(Movie person) throws Exception {
         try (EntityManagerWrapper entityManager = HibernateFactory.getEntityManager()) {
             EntityManager em = entityManager.get();
             em.getTransaction().begin();
             // automatically persists
-            em.find(Person.class, person.getIDPerson()).updateDeatils(person);
+            em.find(Movie.class, person.getIDMovie()).updateDeatils(person);
             em.getTransaction().commit();            
         }
     }

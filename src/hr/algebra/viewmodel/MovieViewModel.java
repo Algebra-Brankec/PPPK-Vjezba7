@@ -5,7 +5,7 @@
  */
 package hr.algebra.viewmodel;
 
-import hr.algebra.model.Person;
+import hr.algebra.model.Movie;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -17,29 +17,29 @@ import javafx.beans.property.StringProperty;
  *
  * @author daniel.bele
  */
-public class PersonViewModel {
-    private final Person person;
+public class MovieViewModel {
+    private final Movie person;
 
-//     private IntegerProperty idPersonProperty;
+//     private IntegerProperty idMovieProperty;
 //     private StringProperty firstNameProperty;
 //     private StringProperty lastNameProperty;
 //     private StringProperty emailProperty;
 //     private IntegerProperty ageProperty;
 //     private ObjectProperty<byte[]> pictureProperty;
 
-    public PersonViewModel(Person person) {
+    public MovieViewModel(Movie person) {
         if (person == null) {
-            person = new Person(0, "", "", 0, "");
+            person = new Movie(0, "", "", 0, "");
         }
         this.person = person;
     }
 
-    public Person getPerson() {
+    public Movie getMovie() {
         return person;
     }
 
-    public IntegerProperty getIdPersonProperty() {
-        return new SimpleIntegerProperty(person.getIDPerson());
+    public IntegerProperty getIdMovieProperty() {
+        return new SimpleIntegerProperty(person.getIDMovie());
     }
 
     public StringProperty getFirstNameProperty() {

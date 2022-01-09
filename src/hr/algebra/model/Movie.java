@@ -24,19 +24,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author daniel.bele
  */
 @Entity
-@Table(name = "Person")
+@Table(name = "Movie")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = HibernateFactory.SELECT_PEOPLE, query = "SELECT p FROM Person p")
+    @NamedQuery(name = HibernateFactory.SELECT_MOVIE, query = "SELECT p FROM Movie p")
 })
-public class Person implements Serializable {
+public class Movie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "IDPerson")
+    @Column(name = "IDMovie")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer iDPerson;
+    private Integer iDMovie;
     @Basic(optional = false)
     @Column(name = "FirstName")
     private String firstName;
@@ -53,31 +53,31 @@ public class Person implements Serializable {
     @Column(name = "Picture")
     private byte[] picture;
 
-    public Person() {
+    public Movie() {
     }
 
-    public Person(Person data) {
+    public Movie(Movie data) {
         updateDeatils(data);
     }
     
-    public Person(Integer iDPerson) {
-        this.iDPerson = iDPerson;
+    public Movie(Integer iDMovie) {
+        this.iDMovie = iDMovie;
     }
 
-    public Person(Integer iDPerson, String firstName, String lastName, int age, String email) {
-        this.iDPerson = iDPerson;
+    public Movie(Integer iDMovie, String firstName, String lastName, int age, String email) {
+        this.iDMovie = iDMovie;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
     }
 
-    public Integer getIDPerson() {
-        return iDPerson;
+    public Integer getIDMovie() {
+        return iDMovie;
     }
 
-    public void setIDPerson(Integer iDPerson) {
-        this.iDPerson = iDPerson;
+    public void setIDMovie(Integer iDMovie) {
+        this.iDMovie = iDMovie;
     }
 
     public String getFirstName() {
@@ -123,18 +123,18 @@ public class Person implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (iDPerson != null ? iDPerson.hashCode() : 0);
+        hash += (iDMovie != null ? iDMovie.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Person)) {
+        if (!(object instanceof Movie)) {
             return false;
         }
-        Person other = (Person) object;
-        if ((this.iDPerson == null && other.iDPerson != null) || (this.iDPerson != null && !this.iDPerson.equals(other.iDPerson))) {
+        Movie other = (Movie) object;
+        if ((this.iDMovie == null && other.iDMovie != null) || (this.iDMovie != null && !this.iDMovie.equals(other.iDMovie))) {
             return false;
         }
         return true;
@@ -142,10 +142,10 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "hr.algebra.Person[ iDPerson=" + iDPerson + " ]";
+        return "hr.algebra.Movie[ iDMovie=" + iDMovie + " ]";
     }
 
-    public void updateDeatils(Person data) {
+    public void updateDeatils(Movie data) {
         this.firstName = data.getFirstName();
         this.lastName = data.getLastName();
         this.age = data.getAge();

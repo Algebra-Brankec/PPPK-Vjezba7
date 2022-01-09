@@ -9,7 +9,7 @@ import hr.algebra.dao.RepositoryFactory;
 import hr.algebra.utilities.FileUtils;
 import hr.algebra.utilities.ImageUtils;
 import hr.algebra.utilities.ValidationUtils;
-import hr.algebra.viewmodel.PersonViewModel;
+import hr.algebra.viewmodel.MovieViewModel;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -47,13 +47,13 @@ import javafx.util.converter.IntegerStringConverter;
  *
  * @author daniel.bele
  */
-public class PeopleController implements Initializable {
+public class MovieController implements Initializable {
 
     private Map<TextField, Label> validationMap;
 
-    private final ObservableList<PersonViewModel> people = FXCollections.observableArrayList();
+    private final ObservableList<MovieViewModel> people = FXCollections.observableArrayList();
 
-    private PersonViewModel selectedPersonViewModel;
+    private MovieViewModel selectedMovieViewModel;
 
     @FXML
     private TabPane tpContent;
@@ -62,17 +62,17 @@ public class PeopleController implements Initializable {
     @FXML
     private Tab tabList;
     @FXML
-    private ImageView ivPerson;
+    private ImageView ivMovie;
     @FXML
-    private TableView<PersonViewModel> tvPeople;
+    private TableView<MovieViewModel> tvMovie;
     @FXML
-    private TableColumn<PersonViewModel, String> tcFirstName, tcLastName, tcEmail;
+    private TableColumn<MovieViewModel, String> tcFirstName, tcLastName, tcEmail;
     @FXML
-    private TableColumn<PersonViewModel, Integer> tcAge;
+    private TableColumn<MovieViewModel, Integer> tcAge;
     @FXML
-    private TextField tfFirstName, tfLastName;
+    private TextField tfFirstName, tfLastName, tfAge, tfEmail;
     @FXML
-    private Label lbFirstNameError, lbLastNameError, lbIconError;
+    private Label lbFirstNameError, lbLastNameError, lbAgeError, lbEmailError, lbIconError;
 
     /**
      * Initializes the controller class.
@@ -80,23 +80,26 @@ public class PeopleController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initValidation();
-        initPeople();
+        initMovie();
         initTable();
+        addIntegerMask(tfAge);
         setupListeners();
     }
 
     private void initValidation() {
         validationMap = Stream.of(
                 new AbstractMap.SimpleImmutableEntry<>(tfFirstName, lbFirstNameError),
-                new AbstractMap.SimpleImmutableEntry<>(tfLastName, lbLastNameError))
+                new AbstractMap.SimpleImmutableEntry<>(tfLastName, lbLastNameError),
+                new AbstractMap.SimpleImmutableEntry<>(tfAge, lbAgeError),
+                new AbstractMap.SimpleImmutableEntry<>(tfEmail, lbEmailError))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    private void initPeople() {
+    private void initMovie() {
         try {
-            RepositoryFactory.getRepository().getPeople().forEach(person -> people.add(new PersonViewModel(person)));
+            RepositoryFactory.getRepository().getMovie().forEach(person -> people.add(new MovieViewModel(person)));
         } catch (Exception ex) {
-            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
             new Alert(Alert.AlertType.ERROR, "Unable to load the form. Exiting...").show();
         }
     }
@@ -104,7 +107,9 @@ public class PeopleController implements Initializable {
     private void initTable() {
         tcFirstName.setCellValueFactory(person -> person.getValue().getFirstNameProperty());
         tcLastName.setCellValueFactory(person -> person.getValue().getLastNameProperty());
-        tvPeople.setItems(people);
+        tcAge.setCellValueFactory(person -> person.getValue().getAgeProperty().asObject());
+        tcEmail.setCellValueFactory(person -> person.getValue().getEmailProperty());
+        tvMovie.setItems(people);
     }
 
     private void addIntegerMask(TextField tf) {
@@ -122,26 +127,26 @@ public class PeopleController implements Initializable {
     private void setupListeners() {
         tpContent.setOnMouseClicked(event -> {
             if (tpContent.getSelectionModel().getSelectedItem().equals(tabEdit)) {
-                bindPerson(null);
+                bindMovie(null);
             }
         });
-        people.addListener((ListChangeListener.Change<? extends PersonViewModel> change) -> {
+        people.addListener((ListChangeListener.Change<? extends MovieViewModel> change) -> {
             if (change.next()) {
                 if (change.wasRemoved()) {
                     change.getRemoved().forEach(pvm -> {
                         try {
-                            RepositoryFactory.getRepository().deletePerson(pvm.getPerson());
+                            RepositoryFactory.getRepository().deleteMovie(pvm.getMovie());
                         } catch (Exception ex) {
-                            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
                 } else if (change.wasAdded()) {
                     change.getAddedSubList().forEach(pvm -> {
                         try {
-                            int idPerson = RepositoryFactory.getRepository().addPerson(pvm.getPerson());
-                            pvm.getPerson().setIDPerson(idPerson);
+                            int idMovie = RepositoryFactory.getRepository().addMovie(pvm.getMovie());
+                            pvm.getMovie().setIDMovie(idMovie);
                         } catch (Exception ex) {
-                            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
                 }
@@ -151,26 +156,28 @@ public class PeopleController implements Initializable {
 
     @FXML
     private void delete(ActionEvent event) {
-        if (tvPeople.getSelectionModel().getSelectedItem() != null) {
-            people.remove(tvPeople.getSelectionModel().getSelectedItem());
+        if (tvMovie.getSelectionModel().getSelectedItem() != null) {
+            people.remove(tvMovie.getSelectionModel().getSelectedItem());
         }
     }
 
     @FXML
     private void edit(ActionEvent event) {
-        if (tvPeople.getSelectionModel().getSelectedItem() != null) {
-            bindPerson(tvPeople.getSelectionModel().getSelectedItem());
+        if (tvMovie.getSelectionModel().getSelectedItem() != null) {
+            bindMovie(tvMovie.getSelectionModel().getSelectedItem());
             tpContent.getSelectionModel().select(tabEdit);            
         }
     }
 
-    private void bindPerson(PersonViewModel viewModel) {
+    private void bindMovie(MovieViewModel viewModel) {
         resetForm();
         
-        selectedPersonViewModel = viewModel != null ? viewModel : new PersonViewModel(null);
-        tfFirstName.setText(selectedPersonViewModel.getFirstNameProperty().get());
-        tfLastName.setText(selectedPersonViewModel.getLastNameProperty().get());
-        ivPerson.setImage(selectedPersonViewModel.getPictureProperty().get() != null ? new Image(new ByteArrayInputStream(selectedPersonViewModel.getPictureProperty().get())) : new Image(new File("src/assets/no_image.png").toURI().toString()));
+        selectedMovieViewModel = viewModel != null ? viewModel : new MovieViewModel(null);
+        tfFirstName.setText(selectedMovieViewModel.getFirstNameProperty().get());
+        tfLastName.setText(selectedMovieViewModel.getLastNameProperty().get());
+        tfAge.setText(String.valueOf(selectedMovieViewModel.getAgeProperty().get()));
+        tfEmail.setText(selectedMovieViewModel.getEmailProperty().get());
+        ivMovie.setImage(selectedMovieViewModel.getPictureProperty().get() != null ? new Image(new ByteArrayInputStream(selectedMovieViewModel.getPictureProperty().get())) : new Image(new File("src/assets/no_image.png").toURI().toString()));
     }
 
     private void resetForm() {
@@ -180,15 +187,15 @@ public class PeopleController implements Initializable {
 
     @FXML
     private void uploadImage(ActionEvent event) {
-        File file = FileUtils.uploadFileDialog(tfLastName.getScene().getWindow(), "jpg", "jpeg", "png");
+        File file = FileUtils.uploadFileDialog(tfAge.getScene().getWindow(), "jpg", "jpeg", "png");
         if (file != null) {
             Image image = new Image(file.toURI().toString());
             try {
                 String ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-                selectedPersonViewModel.getPerson().setPicture(ImageUtils.imageToByteArray(image, ext));
-                ivPerson.setImage(image);
+                selectedMovieViewModel.getMovie().setPicture(ImageUtils.imageToByteArray(image, ext));
+                ivMovie.setImage(image);
             } catch (IOException ex) {
-                Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -196,20 +203,22 @@ public class PeopleController implements Initializable {
     @FXML
     private void commit(ActionEvent event) {
         if (formValid()) {
-            selectedPersonViewModel.getPerson().setFirstName(tfFirstName.getText().trim());
-            selectedPersonViewModel.getPerson().setLastName(tfLastName.getText().trim());
-            if (selectedPersonViewModel.getPerson().getIDPerson() == 0) {
-                people.add(selectedPersonViewModel);
+            selectedMovieViewModel.getMovie().setFirstName(tfFirstName.getText().trim());
+            selectedMovieViewModel.getMovie().setLastName(tfLastName.getText().trim());
+            selectedMovieViewModel.getMovie().setAge(Integer.valueOf(tfAge.getText().trim()));
+            selectedMovieViewModel.getMovie().setEmail(tfEmail.getText().trim());
+            if (selectedMovieViewModel.getMovie().getIDMovie() == 0) {
+                people.add(selectedMovieViewModel);
             } else {
                 try {
                     // we cannot listen to the upates
-                    RepositoryFactory.getRepository().updatePerson(selectedPersonViewModel.getPerson());
-                    tvPeople.refresh();
+                    RepositoryFactory.getRepository().updateMovie(selectedMovieViewModel.getMovie());
+                    tvMovie.refresh();
                 } catch (Exception ex) {
-                    Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            selectedPersonViewModel = null;
+            selectedMovieViewModel = null;
             tpContent.getSelectionModel().select(tabList);
             resetForm();
         }
@@ -227,7 +236,7 @@ public class PeopleController implements Initializable {
             }
         });
 
-        if (selectedPersonViewModel.getPictureProperty().get() == null) {
+        if (selectedMovieViewModel.getPictureProperty().get() == null) {
             lbIconError.setVisible(true);
             ok.set(false);
         } else {

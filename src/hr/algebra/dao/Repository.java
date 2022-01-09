@@ -5,7 +5,7 @@
  */
 package hr.algebra.dao;
 
-import hr.algebra.model.Person;
+import hr.algebra.model.Movie;
 import java.util.List;
 
 /**
@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface Repository {
 
-    int addPerson(Person data) throws Exception;
-    void deletePerson(Person person) throws Exception;
-    List<Person> getPeople() throws Exception;
-    Person getPerson(int idPerson) throws Exception;
-    void updatePerson(Person person) throws Exception;
+    int addMovie(Movie data) throws Exception;
+    void deleteMovie(Movie person) throws Exception;
+    List<Movie> getMovie() throws Exception;
+    Movie getMovie(int idMovie) throws Exception;
+    void updateMovie(Movie person) throws Exception;
     
     default void release() throws Exception{};
 }
