@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/brand/Projects/Algebra/PPPK/PPPK-Vjezba7/src/hr/algebra/dao/sql/HibernateRepository.java</file>
-            <file>file:/C:/Users/brand/Projects/Algebra/PPPK/PPPK-Vjezba7/src/hr/algebra/dao/sql/HibernateFactory.java</file>
-            <file>file:/C:/Users/brand/Projects/Algebra/PPPK/PPPK-Vjezba7/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/brand/Projects/Algebra/PPPK/OBRANA/PPPK-Vjezba7/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/brand/Projects/Algebra/PPPK/OBRANA/PPPK-Vjezba7/src/hr/algebra/dao/sql/HibernateRepository.java</file>
+            <file>file:/C:/Users/brand/Projects/Algebra/PPPK/OBRANA/PPPK-Vjezba7/src/hr/algebra/controller/MovieController.java</file>
+            <file>file:/C:/Users/brand/Projects/Algebra/PPPK/OBRANA/PPPK-Vjezba7/src/hr/algebra/dao/sql/HibernateFactory.java</file>
         </group>
     </open-files>
 </project-private>

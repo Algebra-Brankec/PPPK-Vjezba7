@@ -4,10 +4,10 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>hr.algebra.model.Person</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://algebrapppk.database.windows.net:1433;databaseName=Movie;database=Movie;user=sas@algebrapppk;password=D0r1anL0ta;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://branimirpppk.database.windows.net:1433;database=Movie;user=sas@branimirpppk;password=pa$$w0rd;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"/>
       <property name="javax.persistence.jdbc.user" value="sas"/>
       <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-      <property name="javax.persistence.jdbc.password" value="D0r1anL0ta"/>
+      <property name="javax.persistence.jdbc.password" value="pa$$w0rd"/>
       <property name="hibernate.show_sql" value="true"/>
     </properties>
   </persistence-unit>
